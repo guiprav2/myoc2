@@ -9,7 +9,10 @@ class App {
   }
 
   updateRouter() {
-    switch (location.pathname.slice(1)) {
+    let path = location.pathname.slice(1);
+    if (path.startsWith('myoc2/')) { path = path.slice('myoc2/'.length) }
+
+    switch (path) {
       case '': this.content = d.el(SignIn); break;
       case 'home': this.content = d.el(Home); break;
       case 'my-oc': this.content = d.el(MyOC); break;
