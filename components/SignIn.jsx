@@ -46,7 +46,7 @@ class SignIn {
         return;
       }
 
-      alert('signed in!');
+      location.href = 'home';
     },
 
     'sign-up': () => {
