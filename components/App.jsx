@@ -1,6 +1,8 @@
 import Home from './Home.jsx';
 import MyOC from './MyOC.jsx';
+import OC from './OC.jsx';
 import SignIn from './SignIn.jsx';
+import SubmitWork from './SubmitWork.jsx';
 import d from '@dominant/core';
 
 class App {
@@ -16,6 +18,8 @@ class App {
       case '': this.content = d.el(SignIn); break;
       case 'home': this.content = d.el(Home); break;
       case 'my-oc': this.content = d.el(MyOC); break;
+      case 'oc': this.content = d.el(OC); break;
+      case 'submit-work': this.content = d.el(SubmitWork); break;
     }
   }
 

@@ -24,7 +24,8 @@
     ]
   },
   "dependencies": {
-    "@dominant/core": "^0.1.10"
+    "@dominant/core": "^0.1.10",
+    "qs": "^6.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

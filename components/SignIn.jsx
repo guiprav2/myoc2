@@ -46,6 +46,7 @@ class SignIn {
         return;
       }
 
+      localStorage.setItem('user', JSON.stringify(data[0]));
       location.href = 'home';
     },
 

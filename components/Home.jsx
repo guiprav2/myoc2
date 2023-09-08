@@ -1,28 +1,18 @@
 import d from '@dominant/core';
 
 class Home {
-  gallery = [
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/a9c77065-7522-4fa2-ce44-9985ae2dba00/public' },
-    { url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/5b1a83cb-e4d5-4d4d-246d-48a153fe1200/public' },
-  ];
-
   setup = () => {
     this.root.querySelector('.section\\:gallery').append(this.renderGallery());
+    this.loadData();
   };
+
+  async loadData() {
+    let res = await fetch(`https://protohub.guiprav.com/myoc/works`);
+    let data = await res.json();
+    if (!data || !data.length) { alert('Failed to load'); return }
+    this.gallery = data.slice(0, 20);
+    d.update();
+  }
 
   render = () => this.root = (
     <div class="ComponentCanvas flow-root h-screen overflow-auto sans text-[#2D2829] bg-neutral-200" onAttach={this.setup}>

@@ -1,20 +1,26 @@
 import d from '@dominant/core';
+import qs from 'qs';
 
 class MyOC {
-  ocs = [
-    {
-      name: 'Jess',
-      avatar: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/ef57a801-db25-47b9-fe7b-3a0691eac400/public',
-      artworks: [{ url: 'https://imagedelivery.net/xej_GVif4nQ_9r7VDwXkpg/c96ef130-9c04-4b1e-a861-6c52eab85900/public' }],
-      views: 0,
-      faves: 0,
-      comments: 0,
-    },
-  ];
-
   setup = () => {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user);
     this.root.querySelector('.section\\:list').append(this.renderList());
+    this.loadData();
   };
+
+  async loadData() {
+    let res = await fetch(`https://protohub.guiprav.com/myoc/oc?pid=${this.user._id}`);
+    let data = await res.json();
+    if (!data || !data.length) { alert('Failed to load'); return }
+    this.ocs = data;
+    let res2 = await fetch(`https://protohub.guiprav.com/myoc/works?${qs.stringify({
+      ocid: { $in: this.ocs.map(x => x._id) },
+    })}`);
+    this.works = await res2.json();
+    console.log(data, this.works);
+    d.update();
+  }
 
   render = () => this.root = (
     <div class="flow-root h-screen overflow-auto sans text-[#2D2829] bg-neutral-200" onAttach={this.setup}>
@@ -47,31 +53,37 @@ class MyOC {
 
   renderList = () => d.map(() => this.ocs, x => (
     <div class="flex flex-col items-center m-10">
-      <img class="rounded-full w-48" src={() => x.avatar}/>
+      <a href={() => `oc?id=${x._id}`}>
+        <img class="rounded-full w-48 h-48 object-cover" src={() => x.avatar}/>
+      </a>
       <div class="text-2xl text-[#FA3973] my-6">{d.text(() => x.name)}</div>
-      <div class="relative px-10 max-w-xl w-screen section:gallery">
-        <div class="absolute top-[50%] -translate-y-[50%] left-1 nf nf-fa-chevron_left text-[#FA3973]"></div>
-        {d.map(() => x.artworks, y => <img class="w-full h-[50vh] object-cover" src={() => y.url} />)}
-        <div class="absolute top-[50%] -translate-y-[50%] right-1 nf nf-fa-chevron_right text-[#FA3973]"></div>
-      </div>
-      <div class="px-10 w-screen max-w-xl">
-        <div class="flex gap-3 items-center py-2 border-b text-[#A7A7A7] border-[#E3D9D9BD]">
-          <div class="flex items-center gap-2">
-            <div class="nf nf-fa-eye text-[#FFA1C3]"></div>
-            <div>{d.text(() => x.views)}</div>
+      {d.if(() => this.works.filter(y => y.ocid === x._id).length, (
+        <>
+          <div class="relative px-10 max-w-xl w-screen">
+            <div class="absolute top-[50%] -translate-y-[50%] left-1 nf nf-fa-chevron_left text-[#FA3973]"></div>
+            {d.map(() => this.works.filter(y => y.ocid === x._id), y => <img class="w-full h-[50vh] object-cover" src={() => y.url} />)}
+            <div class="absolute top-[50%] -translate-y-[50%] right-1 nf nf-fa-chevron_right text-[#FA3973]"></div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="nf nf-md-heart text-[#FFA1C3]"></div>
-            <div>{d.text(() => x.faves)}</div>
+          <div class="px-10 w-screen max-w-xl">
+            <div class="flex gap-3 items-center py-2 border-b text-[#A7A7A7] border-[#E3D9D9BD]">
+              <div class="flex items-center gap-2">
+                <div class="nf nf-fa-eye text-[#FFA1C3]"></div>
+                <div>{d.text(() => x.views)}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="nf nf-md-heart text-[#FFA1C3]"></div>
+                <div>{d.text(() => x.faves)}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="nf nf-oct-comment text-[#FFA1C3]"></div>
+                <div>{d.text(() => x.comments)}</div>
+              </div>
+              <div class="flex-1"></div>
+              <div class="nf nf-md-dots_vertical"></div>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="nf nf-oct-comment text-[#FFA1C3]"></div>
-            <div>{d.text(() => x.comments)}</div>
-          </div>
-          <div class="flex-1"></div>
-          <div class="nf nf-md-dots_vertical"></div>
-        </div>
-      </div>
+        </>
+      ))}
     </div>
   ));
 }
