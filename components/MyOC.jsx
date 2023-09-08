@@ -19,7 +19,20 @@ class MyOC {
     })}`);
     this.works = await res2.json();
     console.log(data, this.works);
-    d.update();
+    d.updateSync();
+    requestAnimationFrame(() => {
+      for (let x of document.querySelectorAll('.artwork-slides')) {
+        x.querySelector('img').classList.remove('hidden');
+      }
+    });
+  }
+
+  mvSlide(el, dir) {
+    let imgs = el.querySelectorAll('img');
+    let cur = imgs.findIndex(x => !x.classList.contains('hidden'));
+    let next = (cur + dir + imgs.length) % imgs.length;
+    imgs[cur].classList.add('hidden');
+    imgs[next].classList.remove('hidden');
   }
 
   render = () => this.root = (
@@ -59,10 +72,16 @@ class MyOC {
       <div class="text-2xl text-[#FA3973] my-6">{d.text(() => x.name)}</div>
       {d.if(() => this.works.filter(y => y.ocid === x._id).length, (
         <>
-          <div class="relative px-10 max-w-xl w-screen">
-            <div class="absolute top-[50%] -translate-y-[50%] left-1 nf nf-fa-chevron_left text-[#FA3973]"></div>
-            {d.map(() => this.works.filter(y => y.ocid === x._id), y => <img class="w-full h-[50vh] object-cover" src={() => y.url} />)}
-            <div class="absolute top-[50%] -translate-y-[50%] right-1 nf nf-fa-chevron_right text-[#FA3973]"></div>
+          <div class="relative px-10 max-w-xl w-screen artwork-slides">
+            <a
+              class="absolute top-[50%] -translate-y-[50%] left-1 nf nf-fa-chevron_left text-[#FA3973]"
+              onClick={ev => this.mvSlide(ev.target.closest('.artwork-slides'), -1)}
+            ></a>
+            {d.map(() => this.works.filter(y => y.ocid === x._id), y => <img class="hidden w-full h-[50vh] object-cover" src={() => y.url} />)}
+            <a
+              class="absolute top-[50%] -translate-y-[50%] right-1 nf nf-fa-chevron_right text-[#FA3973]"
+              onClick={ev => this.mvSlide(ev.target.closest('.artwork-slides'), 1)}
+            ></a>
           </div>
           <div class="px-10 w-screen max-w-xl">
             <div class="flex gap-3 items-center py-2 border-b text-[#A7A7A7] border-[#E3D9D9BD]">
