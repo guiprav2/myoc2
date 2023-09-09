@@ -57,7 +57,7 @@ class SubmitWork {
                 <div class="w-screen max-w-lg">
                     <div
                         class="aspect-square bg-white flex justify-center items-center bg-cover bg-center"
-                        style={{ backgroundImage: () => this.url && `url(${this.url})` }}
+                        style={{ backgroundImage: () => this.url && `url('${this.url}')` }}
                         onClick={this.uploadImage}
                     >
                         {d.if(() => !this.url, <div class="nf nf-fa-plus text-[#FFA1C3] text-3xl"></div>)}

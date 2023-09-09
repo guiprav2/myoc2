@@ -110,7 +110,7 @@ class Home {
             </div>
             <div class="px-8 py-6 grid grid-cols-2 sm:grid-cols-6 gap-6">
                 {d.map(() => this.works, x => (
-                    <div class="aspect-square bg-[#CBCBCB] bg-cover bg-center" style={{ backgroundImage: () => `url(${x.url})` }}></div>
+                    <div class="aspect-square bg-[#CBCBCB] bg-cover bg-center" style={{ backgroundImage: () => `url('${x.url}')` }}></div>
                 ))}
                 <a class="flex justify-center items-center aspect-square bg-[#CBCBCB] bg-cover bg-center" href={() => `submit-work?ocid=${this.ocid}`}>
                     <i class="nf nf-fa-plus text-[#FA3973]"></i>

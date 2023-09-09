@@ -71,7 +71,7 @@ class MyOC {
   renderList = () => d.map(() => this.ocs, x => (
     <div class="flex flex-col items-center m-10">
       <a href={() => `oc?id=${x._id}`}>
-        <img class="rounded-full w-48 h-48 object-cover" src={() => x.avatar}/>
+        <img class="rounded-full w-48 h-48 object-cover" src={() => x.url}/>
       </a>
       <div class="text-2xl text-[#FA3973] my-6">{d.text(() => x.name)}</div>
       {d.if(() => this.works.filter(y => y.ocid === x._id).length, (
