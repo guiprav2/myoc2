@@ -1,3 +1,4 @@
+import CreateOC from './CreateOC.jsx';
 import Home from './Home.jsx';
 import MyOC from './MyOC.jsx';
 import OC from './OC.jsx';
@@ -19,6 +20,7 @@ class App {
       case 'home': this.content = d.el(Home); break;
       case 'my-oc': this.content = d.el(MyOC); break;
       case 'oc': this.content = d.el(OC); break;
+      case 'create-oc': this.content = d.el(CreateOC); break;
       case 'submit-work': this.content = d.el(SubmitWork); break;
     }
   }

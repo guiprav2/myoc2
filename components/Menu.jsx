@@ -30,21 +30,21 @@ class Menu {
             <div class="border-b border-[#E3D9D9BD]"></div>
             <div class="flex gap-8 items-center">
                 <div class="ml-8 nf nf-md-plus_box text-[#A7A7A7] text-xl"></div>
-                <div class="">
-                    Submit Work
-                </div>
+                <a href="create-oc">
+                  Create OC
+                </a>
             </div>
             <div class="flex gap-8 items-center">
                 <div class="ml-8 nf nf-fa-user_circle text-[#A7A7A7] text-xl"></div>
-                <div class="">
-                    My OC
-                </div>
+                <a href="my-oc">
+                  My OC
+                </a>
             </div>
             <div class="flex gap-8 items-center">
                 <div class="ml-8 nf nf-md-image_area text-[#A7A7A7] text-xl"></div>
-                <div class="">
-                    Gallery
-                </div>
+                <a href="gallery">
+                  Gallery
+                </a>
             </div>
             <div class="border-b border-[#E3D9D9BD]"></div>
             <div class="flex gap-8 items-center">
