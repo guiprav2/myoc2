@@ -1,7 +1,10 @@
+import Menu from './Menu.jsx';
 import d from '@dominant/core';
 import qs from 'qs';
 
 class MyOC {
+  menu = new Menu();
+
   setup = () => {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log(this.user);
@@ -38,11 +41,12 @@ class MyOC {
   render = () => this.root = (
     <div class="flow-root h-screen overflow-auto sans text-[#2D2829] bg-neutral-200" onAttach={this.setup}>
       <div class="max-w-4xl mx-auto bg-[#F1F1F1] pb-4 min-h-screen shadow-lg">
+        {this.menu.render()}
         <div class="bg-[#2D2829] flex text-xl sticky top-0 shadow-lg flex-col z-10">
           <div class="flex w-full p-4">
             <div class="relative">
               <div class="flex items-center">
-                <div class="nf nf-fa-bars text-[#FA3973C2]"></div>
+                <a class="nf nf-fa-bars text-[#FA3973C2]" href="#" onClick={this.menu.open}></a>
                 <div class="w-24 bg-cover absolute ml-7 h-8" style="background-image: url(&quot;https://i.imgur.com/jfy49cJ.png&quot;);background-position: 0 -14px;"></div>
               </div>
             </div>
